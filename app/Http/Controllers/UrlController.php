@@ -14,6 +14,14 @@ use VladimirYuldashev\LaravelQueueRabbitMQ\Facades\RabbitMQ;
 
 class UrlController extends Controller
 {
+    public function index(Request $request)
+    {
+        $urls = Url::all();
+
+        return response()->json(
+            [ "data" => $urls ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate(['original_url' => 'required|url']);
@@ -23,11 +31,6 @@ class UrlController extends Controller
             'original_url' => $request->original_url,
             'short_code' => Str::random(6)
         ]);
-
-        // Disparar evento y publicarlo en RabbitMQ
-        // $event = new UrlShortened($shortUrl, $originalUrl);
-        // event($event);
-        // dispatch(new PublishUrlEvent(new UrlShortened($url->short_code, $url->original_url)));
 
         return response()->json($url);
     }
