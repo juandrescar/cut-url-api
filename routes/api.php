@@ -11,6 +11,7 @@ Route::get('/{shortCode}', [UrlController::class, 'redirect']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/', [UrlController::class, 'index']);
+Route::get('/urls/{urlId}', [UrlController::class, 'show']);
 
 // Rutas protegidas con Sanctum
 Route::middleware('auth:sanctum')->group(function () {

@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.3",
         "stevebauman/location": "^7.4",
+        "symfony/dom-crawler": "^7.2",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.1"
     },
     "require-dev": {

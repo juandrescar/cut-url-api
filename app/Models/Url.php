@@ -15,5 +15,10 @@ class Url extends Model
         'user_id',
         'original_url',
         'short_code',
+        'title',
+        'image',
+        'favicon',
+        'domain',
+        'description'
     ];
 }
