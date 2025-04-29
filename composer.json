@@ -9,11 +9,11 @@
         "php": "^8.2",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^11.31",
-        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.3",
         "stevebauman/location": "^7.4",
         "symfony/dom-crawler": "^7.2",
+        "tymon/jwt-auth": "^2.2",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.1"
     },
     "require-dev": {

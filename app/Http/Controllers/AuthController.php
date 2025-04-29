@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -28,22 +29,16 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Las credenciales no son correctas.'],
-            ]);
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+        ]);
     }
 
     public function logout(Request $request)
@@ -51,5 +46,10 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Cierre de sesión exitoso']);
+    }
+
+    public function me()
+    {
+        return response()->json(Auth::user()->only('id', 'name'));
     }
 }

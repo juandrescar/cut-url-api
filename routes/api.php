@@ -4,17 +4,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UrlController;
 use Illuminate\Support\Facades\Route;
 
-//Url
-Route::get('/{shortCode}', [UrlController::class, 'redirect']);
-
 //Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/', [UrlController::class, 'index']);
-Route::get('/urls/{urlId}', [UrlController::class, 'show']);
 
-// Rutas protegidas con Sanctum
-Route::middleware('auth:sanctum')->group(function () {
+// Rutas protegidas
+Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/', [UrlController::class, 'index']);
+    Route::get('/me', [AuthController::class, 'me']);
     Route::post('/shorten', [UrlController::class, 'store']);
+    Route::get('/urls/{urlId}', [UrlController::class, 'show']);
 });

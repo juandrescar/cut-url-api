@@ -21,4 +21,9 @@ class Url extends Model
         'domain',
         'description'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
